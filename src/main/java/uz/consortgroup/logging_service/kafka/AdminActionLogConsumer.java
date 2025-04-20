@@ -6,17 +6,17 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import uz.consortgroup.logging_service.entity.ActionType;
 import uz.consortgroup.logging_service.event.admin.UserCreatedEvent;
-import uz.consortgroup.logging_service.service.processor.UserCreationProcessor;
+import uz.consortgroup.logging_service.service.processor.AdminActionProcessor;
 
 import java.util.List;
 import java.util.UUID;
 
 @Component
 @Slf4j
-public class UserCreationKafkaConsumer extends AbstractKafkaConsumer<UserCreatedEvent> {
-    private final UserCreationProcessor processor;
+public class AdminActionLogConsumer extends AbstractKafkaConsumer<UserCreatedEvent> {
+    private final AdminActionProcessor processor;
 
-    public UserCreationKafkaConsumer(UserCreationProcessor processor) {
+    public AdminActionLogConsumer(AdminActionProcessor processor) {
         this.processor = processor;
     }
 
