@@ -1,0 +1,39 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: logging-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/consort_group
+    username: consort
+    password: 2231251fsad1
+    hikari:
+      maximum-pool-size: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  data:
+    redis:
+      host: localhost
+      port: 6382
+
+kafka:
+  bootstrap-servers: localhost:9092
+  consumer-group-id: logging-group
+  session-timeout-ms: 10000
+  max-partition-fetch-bytes: 1048576
+  max-poll-records: 500
+  max-poll-interval-ms: 300000
+  user-created: user-created-by-admin-topic

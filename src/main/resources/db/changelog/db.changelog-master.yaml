@@ -1,0 +1,6 @@
+databaseChangeLog:
+    - include:
+         file: db/changelog/changeset/V010_create_logging_schema.sql
+
+    - include:
+         file: db/changelog/changeset/V011_create_admin_actions_table.sql
