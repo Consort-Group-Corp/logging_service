@@ -10,7 +10,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class UserCreationProcessor implements ActionProcessor<UserCreatedEvent> {
+public class AdminActionProcessor implements ActionProcessor<UserCreatedEvent> {
     private final AdminActionService adminActionService;
 
     @Override
