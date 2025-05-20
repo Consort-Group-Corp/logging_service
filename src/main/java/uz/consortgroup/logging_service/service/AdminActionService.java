@@ -2,11 +2,11 @@ package uz.consortgroup.logging_service.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uz.consortgroup.logging_service.entity.AdminAction;
-import uz.consortgroup.logging_service.event.admin.UserCreatedEvent;
+import uz.consortgroup.logging_service.entity.SuperAdminAction;
+import uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent;
 import uz.consortgroup.logging_service.repository.AdminActionRepository;
 
 import java.time.Duration;
@@ -19,23 +19,23 @@ import java.util.UUID;
 @Slf4j
 public class AdminActionService {
     private final AdminActionRepository adminActionRepository;
-    private final RedisTemplate<String, String> redisTemplate;
+    private final StringRedisTemplate redisTemplate;
 
     @Transactional
-    public void saveAdminActions(List<UserCreatedEvent> events) {
+    public void saveAdminActions(List<SuperAdminUserActionEvent> events) {
 
         if (events.isEmpty()) {
             return;
         }
 
-        List<AdminAction> actions = events.stream()
+        List<SuperAdminAction> actions = events.stream()
                 .filter(event -> markIfNotProcessed(event.getMessageId()))
-                .map(event -> AdminAction.builder()
+                .map(event -> SuperAdminAction.builder()
                         .adminId(event.getAdminId())
                         .userId(event.getUserId())
                         .userEmail(event.getEmail())
                         .userRole(event.getRole())
-                        .actionType(event.getActionType())
+                        .superAdminActionType(event.getSuperAdminActionType())
                         .createdAt(event.getCreatedAt())
                         .build())
                 .filter(Objects::nonNull)
@@ -54,9 +54,8 @@ public class AdminActionService {
 
     private boolean markIfNotProcessed(UUID messageId) {
         String key = "event_processed:" + messageId;
-        return Boolean.TRUE.equals(
-                redisTemplate.opsForValue()
-                        .setIfAbsent(key, "true", Duration.ofMinutes(1))
-        );
+        Boolean wasSet = redisTemplate.opsForValue()
+                .setIfAbsent(key, "true", Duration.ofHours(1));
+        return Boolean.TRUE.equals(wasSet);
     }
 }

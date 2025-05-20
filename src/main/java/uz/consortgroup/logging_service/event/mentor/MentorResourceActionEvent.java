@@ -1,12 +1,11 @@
-package uz.consortgroup.logging_service.event.admin;
+package uz.consortgroup.logging_service.event.mentor;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.consortgroup.logging_service.entity.ActionType;
-import uz.consortgroup.logging_service.entity.UserRole;
+import uz.consortgroup.logging_service.entity.MentorActionType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -15,14 +14,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-public class UserCreatedEvent {
+public class MentorResourceActionEvent {
     private UUID messageId;
-    private UUID adminId;
-    private UUID userId;
-    private String email;
+    private UUID mentorId;
+    private UUID resourceId;
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private UserRole role;
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private ActionType actionType;
+    private MentorActionType mentorActionType;
     private LocalDateTime createdAt;
 }
