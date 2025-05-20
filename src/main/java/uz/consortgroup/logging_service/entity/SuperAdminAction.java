@@ -14,6 +14,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.consortgroup.logging_service.entity.enumeration.SuperAdminActionType;
+import uz.consortgroup.logging_service.entity.enumeration.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -25,8 +27,8 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Entity
 @Builder
-@Table(name = "admin_action", schema = "logging_schema")
-public class AdminAction {
+@Table(name = "super_admin_action", schema = "logging_schema")
+public class SuperAdminAction {
     @Id
     @Column(columnDefinition = "uuid")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -47,7 +49,7 @@ public class AdminAction {
 
     @Column(name = "action_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private ActionType actionType;
+    private SuperAdminActionType superAdminActionType;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

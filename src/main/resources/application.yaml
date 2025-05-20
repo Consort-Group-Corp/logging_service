@@ -36,4 +36,5 @@ kafka:
   max-partition-fetch-bytes: 1048576
   max-poll-records: 500
   max-poll-interval-ms: 300000
-  user-created: user-created-by-admin-topic
+  super-admin-action: super-admin-action-topic
+  mentor-action: mentor-action-topic

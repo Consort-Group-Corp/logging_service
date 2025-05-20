@@ -2,7 +2,7 @@ package uz.consortgroup.logging_service.kafka;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.support.Acknowledgment;
-import uz.consortgroup.logging_service.entity.ActionType;
+import uz.consortgroup.logging_service.entity.enumeration.SuperAdminActionType;
 
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +37,6 @@ public abstract class AbstractKafkaConsumer<T> {
     }
 
     protected abstract void handleMessage(T message);
-    protected abstract ActionType actionType();
+    protected abstract SuperAdminActionType actionType();
     protected abstract UUID getMessageId(T message);
 }

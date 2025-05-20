@@ -57,7 +57,8 @@ public class KafkaConsumerConfig {
         props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, true);
 
         props.put(JsonSerializer.TYPE_MAPPINGS,
-                        "user_created:uz.consortgroup.logging_service.event.admin.UserCreatedEvent");
+                "super-admin-action:uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent, " +
+                "mentor-action:uz.consortgroup.logging_service.event.mentor.MentorResourceActionEvent");
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, sessionTimeoutMs);
         props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, maxPartitionFetchBytes);
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);

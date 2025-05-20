@@ -5,34 +5,35 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import uz.consortgroup.logging_service.entity.enumeration.SuperAdminActionType;
-import uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent;
-import uz.consortgroup.logging_service.service.processor.SuperAdminActionProcessor;
+import uz.consortgroup.logging_service.event.mentor.MentorResourceActionEvent;
+import uz.consortgroup.logging_service.service.processor.MentorActionProcessor;
 
 import java.util.List;
 import java.util.UUID;
 
 @Component
 @Slf4j
-public class AdminActionLogConsumer extends AbstractKafkaConsumer<SuperAdminUserActionEvent> {
-    private final SuperAdminActionProcessor processor;
+public class MentorActionLogConsumer extends AbstractKafkaConsumer<MentorResourceActionEvent> {
 
-    public AdminActionLogConsumer(SuperAdminActionProcessor processor) {
-        this.processor = processor;
+    private final MentorActionProcessor mentorActionProcessor;
+
+    public MentorActionLogConsumer(MentorActionProcessor mentorActionProcessor) {
+        this.mentorActionProcessor = mentorActionProcessor;
     }
 
     @KafkaListener(
-            topics = "${kafka.super-admin-action}",
+            topics = "${kafka.mentor-action}",
             groupId = "${kafka.consumer-group-id}",
             containerFactory = "universalKafkaListenerContainerFactory"
     )
-    public void onMessage(List<SuperAdminUserActionEvent> events, Acknowledgment ack) {
+    public void onMessage(List<MentorResourceActionEvent> events, Acknowledgment ack) {
         log.info("Received {} user-created events", events.size());
         processBatch(events, ack);
     }
 
     @Override
-    protected void handleMessage(SuperAdminUserActionEvent event) {
-        processor.process(List.of(event));
+    protected void handleMessage(MentorResourceActionEvent event) {
+        mentorActionProcessor.process(List.of(event));
     }
 
     @Override
@@ -41,7 +42,7 @@ public class AdminActionLogConsumer extends AbstractKafkaConsumer<SuperAdminUser
     }
 
     @Override
-    protected UUID getMessageId(SuperAdminUserActionEvent event) {
+    protected UUID getMessageId(MentorResourceActionEvent event) {
         return event.getMessageId();
     }
 }
