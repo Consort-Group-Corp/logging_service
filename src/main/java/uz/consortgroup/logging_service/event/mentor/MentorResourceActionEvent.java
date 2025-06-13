@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.consortgroup.logging_service.entity.MentorActionType;
+import uz.consortgroup.logging_service.entity.enumeration.MentorActionType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

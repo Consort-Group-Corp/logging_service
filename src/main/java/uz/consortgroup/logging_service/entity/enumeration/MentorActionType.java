@@ -1,4 +1,4 @@
-package uz.consortgroup.logging_service.entity;
+package uz.consortgroup.logging_service.entity.enumeration;
 
 public enum MentorActionType {
     COURSE_CREATED,

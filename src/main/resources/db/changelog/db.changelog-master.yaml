@@ -5,3 +5,5 @@ databaseChangeLog:
          file: db/changelog/changeset/V011_create_super_admin_actions_table.sql
     - include:
          file: db/changelog/changeset/V022_create_mentor_actions_table.sql
+    - include:
+        file: db/changelog/changeset/V035_create_hr_actions_table.sql

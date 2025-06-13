@@ -1,5 +1,6 @@
 package uz.consortgroup.logging_service.kafka;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -13,13 +14,9 @@ import java.util.UUID;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class MentorActionLogConsumer extends AbstractKafkaConsumer<MentorResourceActionEvent> {
-
     private final MentorActionProcessor mentorActionProcessor;
-
-    public MentorActionLogConsumer(MentorActionProcessor mentorActionProcessor) {
-        this.mentorActionProcessor = mentorActionProcessor;
-    }
 
     @KafkaListener(
             topics = "${kafka.mentor-action}",
@@ -34,11 +31,6 @@ public class MentorActionLogConsumer extends AbstractKafkaConsumer<MentorResourc
     @Override
     protected void handleMessage(MentorResourceActionEvent event) {
         mentorActionProcessor.process(List.of(event));
-    }
-
-    @Override
-    protected SuperAdminActionType actionType() {
-        return SuperAdminActionType.USER_CREATED;
     }
 
     @Override

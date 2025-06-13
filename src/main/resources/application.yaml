@@ -38,3 +38,4 @@ kafka:
   max-poll-interval-ms: 300000
   super-admin-action: super-admin-action-topic
   mentor-action: mentor-action-topic
+  hr-action: hr-action-topic

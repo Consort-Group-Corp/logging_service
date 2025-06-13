@@ -5,6 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uz.consortgroup.logging_service.asspect.annotation.AllAspect;
+import uz.consortgroup.logging_service.asspect.annotation.AspectAfterThrowing;
+import uz.consortgroup.logging_service.asspect.annotation.LoggingAspectAfterMethod;
+import uz.consortgroup.logging_service.asspect.annotation.LoggingAspectBeforeMethod;
 import uz.consortgroup.logging_service.entity.SuperAdminAction;
 import uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent;
 import uz.consortgroup.logging_service.repository.AdminActionRepository;
@@ -16,12 +20,14 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class AdminActionService {
     private final AdminActionRepository adminActionRepository;
     private final StringRedisTemplate redisTemplate;
 
     @Transactional
+    @LoggingAspectBeforeMethod
+    @LoggingAspectAfterMethod
+    @AspectAfterThrowing
     public void saveAdminActions(List<SuperAdminUserActionEvent> events) {
 
         if (events.isEmpty()) {
@@ -41,19 +47,15 @@ public class AdminActionService {
                 .filter(Objects::nonNull)
                 .toList();
 
-        log.info("Saving {} admin actions", actions.size());
-
         try {
             adminActionRepository.saveAll(actions);
-            log.info("Successfully saved {} actions", actions.size());
         } catch (Exception e) {
-            log.error("Failed to save admin actions", e);
             throw new RuntimeException("Database save failed", e);
         }
     }
 
     private boolean markIfNotProcessed(UUID messageId) {
-        String key = "event_processed:" + messageId;
+        String key = "super_admin_event_processed:" + messageId;
         Boolean wasSet = redisTemplate.opsForValue()
                 .setIfAbsent(key, "true", Duration.ofHours(1));
         return Boolean.TRUE.equals(wasSet);

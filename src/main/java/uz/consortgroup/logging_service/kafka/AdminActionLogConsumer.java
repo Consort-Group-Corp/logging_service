@@ -1,5 +1,6 @@
 package uz.consortgroup.logging_service.kafka;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -13,12 +14,9 @@ import java.util.UUID;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class AdminActionLogConsumer extends AbstractKafkaConsumer<SuperAdminUserActionEvent> {
     private final SuperAdminActionProcessor processor;
-
-    public AdminActionLogConsumer(SuperAdminActionProcessor processor) {
-        this.processor = processor;
-    }
 
     @KafkaListener(
             topics = "${kafka.super-admin-action}",
@@ -35,10 +33,6 @@ public class AdminActionLogConsumer extends AbstractKafkaConsumer<SuperAdminUser
         processor.process(List.of(event));
     }
 
-    @Override
-    protected SuperAdminActionType actionType() {
-        return SuperAdminActionType.USER_CREATED;
-    }
 
     @Override
     protected UUID getMessageId(SuperAdminUserActionEvent event) {
