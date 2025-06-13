@@ -2,7 +2,7 @@ package uz.consortgroup.logging_service.service.processor;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.consortgroup.logging_service.entity.MentorActionType;
+import uz.consortgroup.logging_service.entity.enumeration.MentorActionType;
 import uz.consortgroup.logging_service.event.mentor.MentorResourceActionEvent;
 import uz.consortgroup.logging_service.service.MentorActionService;
 

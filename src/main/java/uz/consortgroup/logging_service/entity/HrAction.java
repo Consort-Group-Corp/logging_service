@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.consortgroup.logging_service.entity.enumeration.MentorActionType;
+import uz.consortgroup.logging_service.entity.enumeration.HrActionType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -23,25 +23,25 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode
+@Builder
 @Entity
-@Table(name = "mentor_action", schema = "logging_schema")
-public class MentorAction {
+@Table(name = "hr_action", schema = "logging_schema")
+public class HrAction {
     @Id
     @Column(columnDefinition = "uuid")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "mentor_id", nullable = false)
-    private UUID mentorId;
+    @Column(name = "hr_id", nullable = false)
+    private UUID hrId;
 
-    @Column(name = "resource_id", nullable = false)
-    private UUID resourceId;
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    @Column(name = "mentor_action_type", nullable = false)
+    @Column(name = "hr_action_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private MentorActionType mentorActionType;
+    private HrActionType hrActionType;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

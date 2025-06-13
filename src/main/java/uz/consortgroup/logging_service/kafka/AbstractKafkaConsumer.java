@@ -37,6 +37,5 @@ public abstract class AbstractKafkaConsumer<T> {
     }
 
     protected abstract void handleMessage(T message);
-    protected abstract SuperAdminActionType actionType();
     protected abstract UUID getMessageId(T message);
 }
