@@ -15,6 +15,7 @@ import uz.consortgroup.logging_service.repository.MentorActionRepository;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -31,6 +32,7 @@ public class MentorActionService {
         if (events.isEmpty()) return;
 
         List<MentorAction> actions = events.stream()
+                .filter(Objects::nonNull)
                 .filter(event -> markIfNotProcessed(event.getMessageId()))
                 .map(event -> MentorAction.builder()
                         .mentorId(event.getMentorId())
