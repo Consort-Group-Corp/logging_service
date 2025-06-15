@@ -13,6 +13,7 @@ import uz.consortgroup.logging_service.repository.HrActionRepository;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -27,6 +28,7 @@ public class HrActionService {
     @AspectAfterThrowing
     public void saveHrActions(List<HrActionEvent> events) {
         List<HrAction> actions = events.stream()
+                .filter(Objects::nonNull)
                 .filter(event -> markIfNotProcessed(event.getMessageId()))
                 .map(event -> HrAction.builder()
                         .hrId(event.getHrId())

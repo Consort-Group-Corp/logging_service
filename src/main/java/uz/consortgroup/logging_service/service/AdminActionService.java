@@ -35,6 +35,7 @@ public class AdminActionService {
         }
 
         List<SuperAdminAction> actions = events.stream()
+                .filter(Objects::nonNull)
                 .filter(event -> markIfNotProcessed(event.getMessageId()))
                 .map(event -> SuperAdminAction.builder()
                         .adminId(event.getAdminId())

@@ -20,10 +20,6 @@ public class SuperAdminActionProcessor implements ActionProcessor<SuperAdminUser
 
     @Override
     public void process(List<SuperAdminUserActionEvent> events) {
-        if (events == null || events.isEmpty()) {
-            return;
-        }
-
         adminActionService.saveAdminActions(events);
     }
 }
