@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.support.Acknowledgment;
-import uz.consortgroup.logging_service.event.mentor.MentorResourceActionEvent;
+import uz.consortgroup.logging_service.event.mentor.MentorActionEvent;
 import uz.consortgroup.logging_service.service.processor.MentorActionProcessor;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ class MentorActionLogConsumerTest {
 
     @Test
     void shouldProcessMessagesSuccessfully() {
-        MentorResourceActionEvent event = new MentorResourceActionEvent();
+        MentorActionEvent event = new MentorActionEvent();
         consumer.onMessage(List.of(event), acknowledgment);
         verify(mentorActionProcessor).process(List.of(event));
         verify(acknowledgment).acknowledge();
@@ -48,8 +48,8 @@ class MentorActionLogConsumerTest {
 
     @Test
     void shouldSkipNullMessages() {
-        MentorResourceActionEvent event = new MentorResourceActionEvent();
-        List<MentorResourceActionEvent> messages = new ArrayList<>();
+        MentorActionEvent event = new MentorActionEvent();
+        List<MentorActionEvent> messages = new ArrayList<>();
         messages.add(event);
         messages.add(null);
         consumer.onMessage(messages, acknowledgment);
@@ -59,7 +59,7 @@ class MentorActionLogConsumerTest {
 
     @Test
     void shouldHandleProcessorFailure() {
-        MentorResourceActionEvent event = new MentorResourceActionEvent();
+        MentorActionEvent event = new MentorActionEvent();
         doThrow(new RuntimeException()).when(mentorActionProcessor).process(any());
         assertDoesNotThrow(() -> consumer.onMessage(List.of(event), acknowledgment));
         verify(acknowledgment).acknowledge();
@@ -67,7 +67,7 @@ class MentorActionLogConsumerTest {
 
     @Test
     void shouldHandleAckFailure() {
-        MentorResourceActionEvent event = new MentorResourceActionEvent();
+        MentorActionEvent event = new MentorActionEvent();
         doThrow(new RuntimeException()).when(acknowledgment).acknowledge();
         assertThrows(RuntimeException.class, () -> consumer.onMessage(List.of(event), acknowledgment));
         verify(mentorActionProcessor).process(List.of(event));

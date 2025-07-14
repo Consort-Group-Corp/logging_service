@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-public class MentorResourceActionEvent {
+public class MentorActionEvent {
     private UUID messageId;
     private UUID mentorId;
     private UUID resourceId;

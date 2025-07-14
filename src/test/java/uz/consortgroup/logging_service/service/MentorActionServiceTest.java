@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import uz.consortgroup.logging_service.entity.enumeration.MentorActionType;
-import uz.consortgroup.logging_service.event.mentor.MentorResourceActionEvent;
+import uz.consortgroup.logging_service.event.mentor.MentorActionEvent;
 import uz.consortgroup.logging_service.repository.MentorActionRepository;
 
 import java.time.Duration;
@@ -39,7 +39,7 @@ class MentorActionServiceTest {
 
     @Test
     void shouldSaveMentorActionsSuccessfully() {
-        MentorResourceActionEvent event = createTestEvent();
+        MentorActionEvent event = createTestEvent();
         mockRedisSuccess();
 
         mentorActionService.saveMentorActions(List.of(event));
@@ -49,7 +49,7 @@ class MentorActionServiceTest {
 
     @Test
     void shouldSkipAlreadyProcessedEvents() {
-        MentorResourceActionEvent event = createTestEvent();
+        MentorActionEvent event = createTestEvent();
         mockRedisAlreadyProcessed();
 
         mentorActionService.saveMentorActions(List.of(event));
@@ -61,7 +61,7 @@ class MentorActionServiceTest {
     @Test
     void shouldSkipNullEvents() {
         mockRedisSuccess();
-        List<MentorResourceActionEvent> events = new ArrayList<>();
+        List<MentorActionEvent> events = new ArrayList<>();
         events.add(createTestEvent());
         events.add(null);
 
@@ -72,7 +72,7 @@ class MentorActionServiceTest {
 
     @Test
     void shouldHandleDatabaseError() {
-        MentorResourceActionEvent event = createTestEvent();
+        MentorActionEvent event = createTestEvent();
         mockRedisSuccess();
         when(mentorActionRepository.saveAll(anyList())).thenThrow(new RuntimeException("DB error"));
 
@@ -94,8 +94,8 @@ class MentorActionServiceTest {
             .thenReturn(false);
     }
 
-    private MentorResourceActionEvent createTestEvent() {
-        return MentorResourceActionEvent.builder()
+    private MentorActionEvent createTestEvent() {
+        return MentorActionEvent.builder()
             .messageId(UUID.randomUUID())
             .mentorId(UUID.randomUUID())
             .resourceId(UUID.randomUUID())
