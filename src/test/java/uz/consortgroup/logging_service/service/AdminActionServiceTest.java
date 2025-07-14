@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import uz.consortgroup.logging_service.entity.enumeration.SuperAdminActionType;
 import uz.consortgroup.logging_service.entity.enumeration.UserRole;
-import uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent;
+import uz.consortgroup.logging_service.event.admin.SuperAdminActionEvent;
 import uz.consortgroup.logging_service.repository.AdminActionRepository;
 
 import java.time.Duration;
@@ -42,7 +42,7 @@ class AdminActionServiceTest {
 
     @Test
     void shouldSaveAdminActionsSuccessfully() {
-        SuperAdminUserActionEvent event = createTestEvent();
+        SuperAdminActionEvent event = createTestEvent();
         ValueOperations<String, String> valueOperations = mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.setIfAbsent(anyString(), anyString(), any(Duration.class)))
@@ -55,7 +55,7 @@ class AdminActionServiceTest {
 
     @Test
     void shouldSkipAlreadyProcessedEvents() {
-        SuperAdminUserActionEvent event = createTestEvent();
+        SuperAdminActionEvent event = createTestEvent();
         ValueOperations<String, String> valueOperations = mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.setIfAbsent(anyString(), anyString(), any(Duration.class)))
@@ -80,7 +80,7 @@ class AdminActionServiceTest {
         when(valueOps.setIfAbsent(anyString(), anyString(), any(Duration.class)))
                 .thenReturn(true);
 
-        List<SuperAdminUserActionEvent> events = new ArrayList<>();
+        List<SuperAdminActionEvent> events = new ArrayList<>();
         events.add(createTestEvent());
         events.add(null);
 
@@ -102,8 +102,8 @@ class AdminActionServiceTest {
                 adminActionService.saveAdminActions(List.of(createTestEvent())));
     }
 
-    private SuperAdminUserActionEvent createTestEvent() {
-        return SuperAdminUserActionEvent.builder()
+    private SuperAdminActionEvent createTestEvent() {
+        return SuperAdminActionEvent.builder()
             .messageId(UUID.randomUUID())
             .adminId(UUID.randomUUID())
             .userId(UUID.randomUUID())

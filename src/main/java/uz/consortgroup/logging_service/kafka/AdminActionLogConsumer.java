@@ -5,8 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
-import uz.consortgroup.logging_service.entity.enumeration.SuperAdminActionType;
-import uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent;
+import uz.consortgroup.logging_service.event.admin.SuperAdminActionEvent;
 import uz.consortgroup.logging_service.service.processor.SuperAdminActionProcessor;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.UUID;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class AdminActionLogConsumer extends AbstractKafkaConsumer<SuperAdminUserActionEvent> {
+public class AdminActionLogConsumer extends AbstractKafkaConsumer<SuperAdminActionEvent> {
     private final SuperAdminActionProcessor processor;
 
     @KafkaListener(
@@ -23,19 +22,19 @@ public class AdminActionLogConsumer extends AbstractKafkaConsumer<SuperAdminUser
             groupId = "${kafka.consumer-group-id}",
             containerFactory = "universalKafkaListenerContainerFactory"
     )
-    public void onMessage(List<SuperAdminUserActionEvent> events, Acknowledgment ack) {
+    public void onMessage(List<SuperAdminActionEvent> events, Acknowledgment ack) {
         log.info("Received {} user-created events", events.size());
         processBatch(events, ack);
     }
 
     @Override
-    protected void handleMessage(SuperAdminUserActionEvent event) {
+    protected void handleMessage(SuperAdminActionEvent event) {
         processor.process(List.of(event));
     }
 
 
     @Override
-    protected UUID getMessageId(SuperAdminUserActionEvent event) {
+    protected UUID getMessageId(SuperAdminActionEvent event) {
         return event.getMessageId();
     }
 }

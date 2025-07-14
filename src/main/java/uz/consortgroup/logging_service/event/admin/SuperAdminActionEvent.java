@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-public class SuperAdminUserActionEvent {
+public class SuperAdminActionEvent {
     private UUID messageId;
     private UUID adminId;
     private UUID userId;
