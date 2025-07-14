@@ -57,7 +57,7 @@ public class KafkaConsumerConfig {
         props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, true);
 
         props.put(JsonSerializer.TYPE_MAPPINGS,
-                "super-admin-action:uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent, " +
+                "super-admin-action:uz.consortgroup.logging_service.event.admin.SuperAdminActionEvent, " +
                 "mentor-action:uz.consortgroup.logging_service.event.mentor.MentorActionEvent, " +
                 "hr-action:uz.consortgroup.logging_service.event.hr.HrActionEvent");
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, sessionTimeoutMs);

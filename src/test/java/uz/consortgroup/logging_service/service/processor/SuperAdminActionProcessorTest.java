@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uz.consortgroup.logging_service.entity.enumeration.SuperAdminActionType;
-import uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent;
+import uz.consortgroup.logging_service.event.admin.SuperAdminActionEvent;
 import uz.consortgroup.logging_service.service.AdminActionService;
 
 import java.util.List;
@@ -37,9 +37,9 @@ class SuperAdminActionProcessorTest {
 
     @Test
     void processShouldDelegateToAdminActionService() {
-        List<SuperAdminUserActionEvent> events = List.of(
-            new SuperAdminUserActionEvent(),
-            new SuperAdminUserActionEvent()
+        List<SuperAdminActionEvent> events = List.of(
+            new SuperAdminActionEvent(),
+            new SuperAdminActionEvent()
         );
 
         superAdminActionProcessor.process(events);
@@ -49,7 +49,7 @@ class SuperAdminActionProcessorTest {
 
     @Test
     void processShouldHandleEmptyList() {
-        List<SuperAdminUserActionEvent> emptyList = List.of();
+        List<SuperAdminActionEvent> emptyList = List.of();
 
         superAdminActionProcessor.process(emptyList);
 

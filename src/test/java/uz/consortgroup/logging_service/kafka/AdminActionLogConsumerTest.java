@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.support.Acknowledgment;
-import uz.consortgroup.logging_service.event.admin.SuperAdminUserActionEvent;
+import uz.consortgroup.logging_service.event.admin.SuperAdminActionEvent;
 import uz.consortgroup.logging_service.service.processor.SuperAdminActionProcessor;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ class AdminActionLogConsumerTest {
 
     @Test
     void shouldProcessMessagesSuccessfully() {
-        SuperAdminUserActionEvent event = new SuperAdminUserActionEvent();
+        SuperAdminActionEvent event = new SuperAdminActionEvent();
         consumer.onMessage(List.of(event), acknowledgment);
         verify(processor).process(List.of(event));
         verify(acknowledgment).acknowledge();
@@ -47,8 +47,8 @@ class AdminActionLogConsumerTest {
 
     @Test
     void shouldSkipNullMessages() {
-        SuperAdminUserActionEvent event = new SuperAdminUserActionEvent();
-        List<SuperAdminUserActionEvent> messages = new ArrayList<>();
+        SuperAdminActionEvent event = new SuperAdminActionEvent();
+        List<SuperAdminActionEvent> messages = new ArrayList<>();
         messages.add(event);
         messages.add(null);
 
@@ -60,7 +60,7 @@ class AdminActionLogConsumerTest {
 
     @Test
     void shouldHandleProcessorFailure() {
-        SuperAdminUserActionEvent event = new SuperAdminUserActionEvent();
+        SuperAdminActionEvent event = new SuperAdminActionEvent();
         doThrow(new RuntimeException()).when(processor).process(any());
         consumer.onMessage(List.of(event), acknowledgment);
         verify(acknowledgment).acknowledge();
@@ -68,7 +68,7 @@ class AdminActionLogConsumerTest {
 
     @Test
     void shouldHandleAckFailure() {
-        SuperAdminUserActionEvent event = new SuperAdminUserActionEvent();
+        SuperAdminActionEvent event = new SuperAdminActionEvent();
 
         doThrow(new RuntimeException("Ack failed")).when(acknowledgment).acknowledge();
 
