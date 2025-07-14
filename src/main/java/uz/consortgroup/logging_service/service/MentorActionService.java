@@ -1,16 +1,14 @@
 package uz.consortgroup.logging_service.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uz.consortgroup.logging_service.asspect.annotation.AllAspect;
 import uz.consortgroup.logging_service.asspect.annotation.AspectAfterThrowing;
 import uz.consortgroup.logging_service.asspect.annotation.LoggingAspectAfterMethod;
 import uz.consortgroup.logging_service.asspect.annotation.LoggingAspectBeforeMethod;
 import uz.consortgroup.logging_service.entity.MentorAction;
-import uz.consortgroup.logging_service.event.mentor.MentorResourceActionEvent;
+import uz.consortgroup.logging_service.event.mentor.MentorActionEvent;
 import uz.consortgroup.logging_service.repository.MentorActionRepository;
 
 import java.time.Duration;
@@ -28,7 +26,7 @@ public class MentorActionService {
     @LoggingAspectBeforeMethod
     @LoggingAspectAfterMethod
     @AspectAfterThrowing
-    public void saveMentorActions(List<MentorResourceActionEvent> events) {
+    public void saveMentorActions(List<MentorActionEvent> events) {
         if (events.isEmpty()) return;
 
         List<MentorAction> actions = events.stream()

@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uz.consortgroup.logging_service.entity.enumeration.MentorActionType;
-import uz.consortgroup.logging_service.event.mentor.MentorResourceActionEvent;
+import uz.consortgroup.logging_service.event.mentor.MentorActionEvent;
 import uz.consortgroup.logging_service.service.MentorActionService;
 
 import java.util.List;
@@ -32,9 +32,9 @@ class MentorActionProcessorTest {
 
     @Test
     void processShouldDelegateToMentorActionService() {
-        List<MentorResourceActionEvent> events = List.of(
-            new MentorResourceActionEvent(),
-            new MentorResourceActionEvent()
+        List<MentorActionEvent> events = List.of(
+            new MentorActionEvent(),
+            new MentorActionEvent()
         );
 
         mentorActionProcessor.process(events);
@@ -44,7 +44,7 @@ class MentorActionProcessorTest {
 
     @Test
     void processShouldHandleEmptyList() {
-        List<MentorResourceActionEvent> emptyList = List.of();
+        List<MentorActionEvent> emptyList = List.of();
 
         mentorActionProcessor.process(emptyList);
 
