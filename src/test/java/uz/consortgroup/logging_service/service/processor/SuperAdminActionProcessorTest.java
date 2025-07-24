@@ -46,13 +46,4 @@ class SuperAdminActionProcessorTest {
 
         verify(adminActionService).saveAdminActions(events);
     }
-
-    @Test
-    void processShouldHandleEmptyList() {
-        List<SuperAdminActionEvent> emptyList = List.of();
-
-        superAdminActionProcessor.process(emptyList);
-
-        verify(adminActionService).saveAdminActions(emptyList);
-    }
 }

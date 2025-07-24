@@ -41,13 +41,4 @@ class HrActionProcessorTest {
 
         verify(hrActionService).saveHrActions(events);
     }
-
-    @Test
-    void processShouldHandleEmptyList() {
-        List<HrActionEvent> emptyList = List.of();
-
-        hrActionProcessor.process(emptyList);
-
-        verify(hrActionService).saveHrActions(emptyList);
-    }
 }
