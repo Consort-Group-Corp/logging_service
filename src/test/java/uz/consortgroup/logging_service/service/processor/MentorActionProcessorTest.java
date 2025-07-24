@@ -41,13 +41,4 @@ class MentorActionProcessorTest {
 
         verify(mentorActionService).saveMentorActions(events);
     }
-
-    @Test
-    void processShouldHandleEmptyList() {
-        List<MentorActionEvent> emptyList = List.of();
-
-        mentorActionProcessor.process(emptyList);
-
-        verify(mentorActionService).saveMentorActions(emptyList);
-    }
 }

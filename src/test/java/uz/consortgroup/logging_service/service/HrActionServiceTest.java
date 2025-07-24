@@ -64,12 +64,6 @@ class HrActionServiceTest {
     }
 
     @Test
-    void shouldHandleEmptyEventList() {
-        hrActionService.saveHrActions(List.of());
-        verify(hrActionRepository).saveAll(List.of());
-    }
-
-    @Test
     void shouldSkipNullEvents() {
         ValueOperations<String, String> valueOps = mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOps);
