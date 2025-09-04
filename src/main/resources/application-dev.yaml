@@ -10,7 +10,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/consort_group
+    url: jdbc:postgresql://db:5432/consort_group
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     hikari:
@@ -29,11 +29,11 @@ spring:
 
   data:
     redis:
-      host: localhost
-      port: 6382
+      host: consort-redis-logging-service
+      port: 6379
 
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: kafka:9092
   consumer-group-id: logging-group
   session-timeout-ms: 10000
   max-partition-fetch-bytes: 1048576
