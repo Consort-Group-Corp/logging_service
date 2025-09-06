@@ -23,6 +23,14 @@ repositories {
     mavenCentral()
 }
 
+extra["springCloudVersion"] = "2024.0.1"
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
+}
+
 dependencies {
     // Lombok
     compileOnly("org.projectlombok:lombok")
@@ -36,6 +44,8 @@ dependencies {
     // Apache Kafka
     implementation("org.springframework.kafka:spring-kafka:3.2.0")
 
+    //Eureka
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
     // Работа с базой данных
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -46,6 +56,9 @@ dependencies {
 
     // Redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    //Actuator
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // Тестирование
     testImplementation("org.springframework.boot:spring-boot-starter-test")
