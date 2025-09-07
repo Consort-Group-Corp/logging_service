@@ -18,7 +18,7 @@ public class AdminActionLogConsumer extends AbstractKafkaConsumer<SuperAdminActi
     private final SuperAdminActionProcessor processor;
 
     @KafkaListener(
-            topics = "${kafka.super-admin-action}",
+            topics = "${topics.super-admin-action}",
             groupId = "${kafka.consumer-group-id}",
             containerFactory = "universalKafkaListenerContainerFactory"
     )

@@ -23,7 +23,7 @@ public class HrActionLogConsumer extends AbstractKafkaConsumer<HrActionEvent>  {
     }
 
     @KafkaListener(
-            topics = "${kafka.hr-action}",
+            topics = "${topics.hr-action}",
             groupId = "${kafka.consumer-group-id}",
             containerFactory = "universalKafkaListenerContainerFactory"
     )

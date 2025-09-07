@@ -18,7 +18,7 @@ public class MentorActionLogConsumer extends AbstractKafkaConsumer<MentorActionE
     private final MentorActionProcessor mentorActionProcessor;
 
     @KafkaListener(
-            topics = "${kafka.mentor-action}",
+            topics = "${topics.mentor-action}",
             groupId = "${kafka.consumer-group-id}",
             containerFactory = "universalKafkaListenerContainerFactory"
     )
