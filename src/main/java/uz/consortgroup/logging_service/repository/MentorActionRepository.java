@@ -7,5 +7,5 @@ import uz.consortgroup.logging_service.entity.MentorAction;
 import java.util.UUID;
 
 @Repository
-public interface MentorActionRepository extends JpaRepository<MentorAction, UUID> {
+public interface  MentorActionRepository extends JpaRepository<MentorAction, UUID> {
 }
